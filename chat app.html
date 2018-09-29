@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Chat app</title>
+</head>
+<body>
+
+    <input type="text" id="chat_msg"/>
+    <button onClick="saveChat()">Send</button>
+    <ul id="chat_list">
+
+    </ul>
+    <script>
+        var userName = prompt("enter a user name");
+        var chatArray = [];
+        display();
+        setInterval(function () {
+            display();
+        }, 3000);
+
+        //check for previous chats
+       /* function prevChats() {
+            let chat = JSON.parse(localStorage.getItem("chat_list"));
+
+        }
+        */
+
+        function saveChat() {
+            var msg = document.getElementById("chat_msg").value;
+            var chat = {
+                user_name: userName,
+                message: msg
+            };
+            chatArray.push(chat);
+            localStorage.setItem("chat_list", JSON.stringify(chatArray));
+            display();
+          
+
+            
+        }
+        
+        function display() {
+            var checkChat = JSON.parse(localStorage.getItem("chat_list"));
+            if (checkChat) {
+                chatArray = checkChat;
+            }
+            else
+                checkChat = [];
+
+            document.getElementById("chat_list").innerHTML = "";
+            for (var a = 0; a < checkChat.length ; a++) {
+                document.getElementById("chat_list").innerHTML += "<li>" + checkChat[a].user_name + " : " + checkChat[a].message + "</li>";
+            }
+
+        }
+
+
+    </script>
+</body>
+</html>
